@@ -1,8 +1,55 @@
-.background-welcome {
+html,body{
+    height: 100%
+}
+
+.background {
     background-color: #F7F0CD;
 }
 
-.background-welcome h1 {
+.background h1 {
     font-family: 'Vollkorn', serif;
     text-align: center;
+    color: #535353;
+    font-size: 72px;
+}
+
+.background h2 {
+    font-family: 'Vollkorn', serif;
+    color: #535353;
+    font-size: 36px;
+}
+
+.vertical-center {
+    min-height: 100%;
+    min-height: 100vh;
+    display: flex; 
+    align-items : center;
+    width: 100%;
+    justify-content : center;
+}
+
+.explore {
+    font-family: 'Vollkorn', serif;
+    color: #535353;
+    font-size: 48px;
+    text-decoration: underline;
+    cursor: pointer;
+}
+
+.explore:hover {
+    color: #484886;
+}
+
+footer {
+    width:100%;
+    position: absolute;
+    left: 0;
+    bottom: 0; 
+    margin-bottom: 25px;
+}
+
+.share {
+    font-size: 48px;
+    color: white;
+    text-shadow: 0px 1px 4px #afab94;
 }

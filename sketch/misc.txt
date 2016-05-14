@@ -1,3 +1,6 @@
 Fonts:
 https://www.google.com/fonts#UsePlace:use/Collection:Vollkorn
 http://fontawesome.io/
+
+Stuff:
+http://stackoverflow.com/questions/22196587/how-to-center-align-vertically-the-container-in-bootstrap
