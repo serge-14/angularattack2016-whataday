@@ -20,7 +20,7 @@
     ],
     "member-access": false,
     "member-ordering": [
-      true,
+      false,
       "static-before-instance",
       "variables-before-functions"
     ],
@@ -59,7 +59,7 @@
       "check-whitespace"
     ],
     "quotemark": [
-      true,
+      false,
       "single"
     ],
     "radix": true,

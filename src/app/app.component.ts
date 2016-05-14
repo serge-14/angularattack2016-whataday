@@ -1,7 +1,24 @@
 import {Component} from '@angular/core';
 
 @Component({
-    selector: 'my-app',
-    template: '<h1>My First Angular 2 App</h1>'
+    selector:   'my-app',
+    templateUrl: 'app/app.component.html'
 })
-export class AppComponent { }
+export class AppComponent {
+
+    private themeName: String = '';
+
+    get isGreenTheme(): boolean {
+        return this.themeName === 'green';
+    }
+
+    get isGreyTheme(): boolean {
+        return this.themeName === 'grey';
+    }
+
+    public changeTheme(nextTheme: String) {
+        if (this.themeName !== nextTheme) {
+            this.themeName = nextTheme;
+        }
+    }
+}

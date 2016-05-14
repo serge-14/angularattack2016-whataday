@@ -58,7 +58,10 @@ gulp.task("compile", ["tslint"], () => {
         .pipe(tsc(tsProject));
     return tsResult.js
         .pipe(sourcemaps.write("."))
-        .pipe(gulp.dest("build"));
+        .pipe(gulp.dest("build"))
+        .pipe(browserSync.reload({
+            stream: true
+        }));
 });
 
 /**
@@ -70,9 +73,17 @@ gulp.task("copyicons", () => {
 });
 
 /**
+ * Copy comppnents html
+ */
+gulp.task("copyhtml", () => {
+    return gulp.src(["src/app/**.html"])
+        .pipe(gulp.dest("build"));
+});
+
+/**
  * Copy all resources that are not TypeScript files into build directory.
  */
-gulp.task("resources", ['copyicons'], () => {
+gulp.task("resources", ['copyicons', 'copyhtml'], () => {
     return gulp.src(["src/**/*", "!**/*.ts", "!src/{icons,icons/**}"])
         .pipe(gulp.dest("build"))
         .pipe(browserSync.reload({

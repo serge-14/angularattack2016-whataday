@@ -10,7 +10,8 @@ module.exports = function(config) {
     plugins: [
       require('karma-jasmine'),
       require('karma-chrome-launcher'),
-      require('karma-htmlfile-reporter')
+      require('karma-htmlfile-reporter'),
+      require('karma-mocha-reporter')
     ],
 
     customLaunchers: {
@@ -35,7 +36,7 @@ module.exports = function(config) {
       'node_modules/zone.js/dist/jasmine-patch.js',
       'node_modules/zone.js/dist/async-test.js',
       'node_modules/zone.js/dist/fake-async-test.js',
-
+      
       // RxJs.
       { pattern: 'node_modules/rxjs/**/*.js', included: false, watched: false },
       { pattern: 'node_modules/rxjs/**/*.js.map', included: false, watched: false },
@@ -62,13 +63,12 @@ module.exports = function(config) {
     // proxied base paths for loading assets
     proxies: {
       // required for component assets fetched by Angular's compiler
-      "/build/app/": appAssets
+      "/app/": appAssets
     },
 
     exclude: [],
     preprocessors: {},
-    reporters: ['progress', 'html'],
-
+    reporters: [ 'html', 'mocha'],
     // HtmlReporter configuration
     htmlReporter: {
       // Open this file to see results in browser
