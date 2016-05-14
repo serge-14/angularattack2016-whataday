@@ -96,6 +96,19 @@ header {
     max-height: 250px;
 }
 
+.carousel-inner > .item > p {
+    width: 70%;
+    margin: auto;
+}
+
+.carousel-control.left {
+    background-image: none;
+}
+
+.carousel-control.right {
+    background-image: none;
+}
+
 /*-----------------Green-------------------*/
 
 .green {
@@ -126,7 +139,7 @@ header {
     color: white;
 }
 
-.grey a.button:link, .green a.button:visited, .green a.button:active {
+.grey a.button:link, .grey a.button:visited, .grey a.button:active {
     color: white;
 }
 
