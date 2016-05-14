@@ -1,7 +1,8 @@
 node_modules
 npm-debug.log
-app/**/*.js
-app/**/*.js.map
+src/app/**/*.js
+src/app/**/*.js.map
+build
 angularattack2016-whataday.iml
 .idea
 _test-output
