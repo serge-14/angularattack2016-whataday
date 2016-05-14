@@ -6,14 +6,14 @@
     "lint": "tslint ./app/**/*.ts -t verbose",
     "lite": "lite-server",
     "typings": "typings",
-
     "clean": "gulp clean",
     "compile": "gulp compile",
     "build": "gulp build",
     "start": "concurrent --kill-others \"gulp watch\" \"lite-server\"",
     "postinstall": "typings install",
     "webdriver:update": "webdriver-manager update",
-    "prototype": "lite-server  -c prototype-server-config.json"
+    "prototype": "lite-server  -c prototype-server-config.json",
+    "test": "gulp test"
   },
   "license": "ISC",
   "dependencies": {
@@ -42,6 +42,7 @@
     "gulp-sourcemaps": "^1.6.0",
     "gulp-tslint": "^5.0.0",
     "gulp-typescript": "^2.13.4",
+    "gulp-watch": "^4.3.5",
     "http-server": "^0.9.0",
     "jasmine-core": "~2.4.1",
     "karma": "^0.13.22",

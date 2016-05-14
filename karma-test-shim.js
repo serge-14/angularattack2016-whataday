@@ -47,7 +47,7 @@ System.config({
   map: {
     'rxjs': 'node_modules/rxjs',
     '@angular': 'node_modules/@angular',
-    'app': 'app'
+    'app': 'build/app'
   },
   packages: packages
 });
