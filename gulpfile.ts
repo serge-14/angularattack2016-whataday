@@ -104,3 +104,15 @@ gulp.task('modules', ['compile', 'libs'], (cb) => {
             console.error(err);
         });
 });
+
+var surge = require('gulp-surge')
+
+gulp.task('deploy', () => {
+    return gulp
+        .src('.surgeignore')
+        .pipe(gulp.dest('build'))
+        .pipe(surge({
+            project: './build',     
+            domain: 'whataday.2016.angularattack.io'
+        }));
+});
