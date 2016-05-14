@@ -1,5 +1,5 @@
 {
-  "name": "angular2-quickstart",
+  "name": "angularattack2016-whataday",
   "version": "1.0.0",
   "scripts": {
     "start": "npm run lite",
@@ -25,5 +25,15 @@
   "devDependencies": {
     "concurrently": "^2.0.0",
     "lite-server": "^2.2.0"
-  }
+  },
+  "main": "main.js",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/rumblex/angularattack2016-whataday.git"
+  },
+  "author": "TwoTeam",
+  "bugs": {
+    "url": "https://github.com/rumblex/angularattack2016-whataday/issues"
+  },
+  "homepage": "https://github.com/rumblex/angularattack2016-whataday#readme"
 }
