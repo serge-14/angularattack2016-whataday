@@ -4,6 +4,7 @@ const tsc = require("gulp-typescript");
 const sourcemaps = require('gulp-sourcemaps');
 const tsProject = tsc.createProject("tsconfig.json");
 const tslint = require('gulp-tslint');
+const Builder = require('systemjs-builder');
 var Server = require('karma').Server;
 
 /**
@@ -61,7 +62,7 @@ gulp.task("libs", () => {
 /**
  * Build the project.
  */
-gulp.task("build", ['compile', 'resources', 'libs'], () => {
+gulp.task("build", ['compile', 'resources', 'libs', 'modules'], () => {
     console.log("Building the project ...")
 });
 
@@ -88,4 +89,18 @@ gulp.task('tdd', (done) => {
     new Server({
         configFile: __dirname + '/karma.conf.js'
     }, done).start();
+});
+
+gulp.task('modules', ['compile', 'libs'], (cb) => {
+        const builder = new Builder('build/', 'src/systemjs.config.js');
+        Promise.all([
+            builder.bundle('app/**/*.js - [app/**/*.js]', 'build/lib/dependencies.js', { minify: true, sourceMaps: true }),
+           // builder.bundle('[app/**/*.js] - *.spec.js', 'build/app/app.js', { minify: true, sourceMaps: true })
+        ]).then(function(){
+            console.log('Build of modules complete');
+            cb();
+        })
+        .catch(function(err){
+            console.error(err);
+        });
 });
