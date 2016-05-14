@@ -11,11 +11,13 @@ html,body{
     font-family: 'Vollkorn', serif;
     text-align: center;
     font-size: 72px;
+    transition: font-size 500ms;
 }
 
 .background h2 {
     font-family: 'Vollkorn', serif;
     font-size: 36px;
+    transition: font-size 500ms;
 }
 
 .background p {
@@ -46,6 +48,19 @@ a.button:hover {
 a.link {
     text-decoration: underline;
 }
+
+.carousel-control > i {
+    position: absolute;
+    top: 50%;
+    z-index: 5;
+    display: inline-block;
+    margin-top: -24px;
+}
+
+.carousel-control > .fa-chevron-right {
+   right: 50%;
+}
+
 
 footer {
     width:100%;
@@ -96,11 +111,6 @@ header {
     max-height: 250px;
 }
 
-.carousel-inner > .item > p {
-    width: 70%;
-    margin: auto;
-}
-
 .carousel-control.left {
     background-image: none;
 }
@@ -108,6 +118,18 @@ header {
 .carousel-control.right {
     background-image: none;
 }
+
+.carousel-content {
+    display:flex;
+    align-items:center;
+    height: 25vh;
+    transition: height 500ms;
+}
+
+.carousel-content > div {
+    width: 100%;
+}
+
 
 /*-----------------Green-------------------*/
 
@@ -157,4 +179,20 @@ header {
 
 .grey .borders {
     color: #45433C;
+}
+
+/*-----------------Media-------------------*/
+
+@media (max-width: 768px) {
+    .carousel-content {
+        height: 50vh;
+    }
+    
+    .background h1 {
+        font-size: 52px;
+    }
+
+    .background h2 {
+        font-size: 32px;
+    }
 }
