@@ -6,3 +6,4 @@ build
 angularattack2016-whataday.iml
 .idea
 _test-output
+sketch/*.png
