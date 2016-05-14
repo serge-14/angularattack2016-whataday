@@ -6,6 +6,11 @@ const tsProject = tsc.createProject("tsconfig.json");
 const tslint = require('gulp-tslint');
 const Builder = require('systemjs-builder');
 var Server = require('karma').Server;
+const change = require("gulp-change");
+var surge = require('gulp-surge')
+var browserSync = require('browser-sync').create();
+var runSequence = require('run-sequence');
+var argv = require('yargs').argv;
 
 /**
  * Remove build directory.
@@ -26,8 +31,29 @@ gulp.task('tslint', () => {
 /**
  * Compile TypeScript sources and create sourcemaps in build directory.
  */
+
+//hack, but works
+function enableProductionMode(content, done)
+{    
+    //65 bytes is size of enviroment.ts
+    if(content.length == 65)
+    {
+        content = content.replace(/export const Production = false;/, "export const Production = true;");
+    }
+    done(null, content);
+}
+
 gulp.task("compile", ["tslint"], () => {
-    var tsResult = gulp.src("src/**/*.ts")
+    var glob = gulp.src("src/**/*.ts")
+    
+    if(argv.production)
+    {
+        console.log("Production mode is enabled");
+        
+        glob.pipe(change(enableProductionMode));
+    }
+    
+    tsResult = glob
         .pipe(sourcemaps.init())
         .pipe(tsc(tsProject));
     return tsResult.js
@@ -36,11 +62,22 @@ gulp.task("compile", ["tslint"], () => {
 });
 
 /**
+ * Copy all icons to root directory.
+ */
+gulp.task("copyicons", () => {
+    return gulp.src(["src/icons/**.*"])
+        .pipe(gulp.dest("build"));
+});
+
+/**
  * Copy all resources that are not TypeScript files into build directory.
  */
-gulp.task("resources", () => {
-    return gulp.src(["src/**/*", "!**/*.ts"])
+gulp.task("resources", ['copyicons'], () => {
+    return gulp.src(["src/**/*", "!**/*.ts", "!src/{icons,icons/**}"])
         .pipe(gulp.dest("build"))
+        .pipe(browserSync.reload({
+            stream: true
+        }));
 });
 
 /**
@@ -92,13 +129,42 @@ gulp.task('modules', ['compile', 'libs'], (cb) => {
         });
 });
 
-var surge = require('gulp-surge')
+/**
+ * Upload to surge
+ */
 
 gulp.task('deploy', () => {
-    gulp.src('.surgeignore')
+    
+    if(!argv.production)
+    {
+        console.warn("*********> You are deploying non-production version! <*********");
+    }
+    
+    gulp.src(['.surgeignore', 'CNAME'])
         .pipe(gulp.dest('build'));
     return surge({
             project: './build',
             domain: 'whataday.2016.angularattack.io'
         });
 });
+
+/**
+ * Launch server
+ */
+gulp.task('browserSync', function() {
+  browserSync.init({
+    server: {
+        baseDir: 'build',
+    },
+    port: 8000
+  })
+})
+
+/**
+ * Default command
+ */
+gulp.task('default', function (callback) {
+  runSequence('build', ['browserSync', 'watch'],
+    callback
+  )
+})
