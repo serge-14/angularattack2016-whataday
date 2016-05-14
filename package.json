@@ -55,6 +55,7 @@
     "lodash": "^4.11.1",
     "protractor": "^3.3.0",
     "rimraf": "^2.5.2",
+    "systemjs-builder": "^0.15.16",
     "tslint": "^3.7.4",
     "typescript": "^1.8.10",
     "typings": "^0.8.1"
