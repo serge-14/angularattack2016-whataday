@@ -11,7 +11,7 @@
     "compile": "gulp compile",
     "build": "gulp build",
     "start": "concurrent --kill-others \"gulp watch\" \"lite-server\"",
-    "postinstall": "typings install"
+    "postinstall": "typings install",
     "webdriver:update": "webdriver-manager update",
     "prototype": "lite-server  -c prototype-server-config.json"
   },
