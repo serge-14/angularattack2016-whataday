@@ -13,7 +13,7 @@
     "postinstall": "typings install",
     "webdriver:update": "webdriver-manager update",
     "prototype": "lite-server  -c prototype-server-config.json",
-    "test": "gulp test"
+    "test": "gulp compile && concurrently \"gulp watch\" \"karma start karma.conf.js\""
   },
   "license": "ISC",
   "dependencies": {

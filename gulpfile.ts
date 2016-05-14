@@ -78,19 +78,6 @@ gulp.task('watch', () => {
     });
 });
 
-gulp.task('test', (done) => {
-    new Server({
-        configFile: __dirname + '/karma.conf.js',
-        singleRun: true
-    }, done).start();
-});
-
-gulp.task('tdd', (done) => {
-    new Server({
-        configFile: __dirname + '/karma.conf.js'
-    }, done).start();
-});
-
 gulp.task('modules', ['compile', 'libs'], (cb) => {
         const builder = new Builder('build/', 'src/systemjs.config.js');
         Promise.all([
@@ -108,11 +95,10 @@ gulp.task('modules', ['compile', 'libs'], (cb) => {
 var surge = require('gulp-surge')
 
 gulp.task('deploy', () => {
-    return gulp
-        .src('.surgeignore')
-        .pipe(gulp.dest('build'))
-        .pipe(surge({
-            project: './build',     
+    gulp.src('.surgeignore')
+        .pipe(gulp.dest('build'));
+    return surge({
+            project: './build',
             domain: 'whataday.2016.angularattack.io'
-        }));
+        });
 });
