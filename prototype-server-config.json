@@ -1,0 +1,5 @@
+{
+  "port": 8000,
+  "files": ["./sketch/prototypes/**/*.{html,htm,css,js}"],
+  "server": { "baseDir": "./sketch/prototypes/" }
+}

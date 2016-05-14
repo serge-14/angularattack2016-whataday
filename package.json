@@ -11,7 +11,8 @@
     "tsc": "tsc",
     "tsc:w": "tsc -w",
     "typings": "typings",
-    "webdriver:update": "webdriver-manager update"
+    "webdriver:update": "webdriver-manager update",
+    "prototype": "lite-server  -c prototype-server-config.json"
   },
   "license": "ISC",
   "dependencies": {
