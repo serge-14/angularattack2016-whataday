@@ -11,6 +11,7 @@ var surge = require('gulp-surge')
 var browserSync = require('browser-sync').create();
 var runSequence = require('run-sequence');
 var argv = require('yargs').argv;
+const autoprefixer = require('gulp-autoprefixer');
 
 /**
  * Remove build directory.
@@ -81,10 +82,22 @@ gulp.task("copyhtml", () => {
 });
 
 /**
+ * css
+ */
+gulp.task('css', () =>
+    gulp.src('src/styles.css')
+        .pipe(autoprefixer({
+            browsers: ['last 2 versions'],
+            cascade: false
+        }))
+        .pipe(gulp.dest('build'))
+);
+
+/**
  * Copy all resources that are not TypeScript files into build directory.
  */
-gulp.task("resources", ['copyicons', 'copyhtml'], () => {
-    return gulp.src(["src/**/*", "!**/*.ts", "!src/{icons,icons/**}"])
+gulp.task("resources", ['copyicons', 'copyhtml', 'css'], () => {
+    return gulp.src(["src/**/*", "!**/*.ts", "!src/{icons,icons/**}", "!**/*.css",])
         .pipe(gulp.dest("build"))
         .pipe(browserSync.reload({
             stream: true
@@ -146,10 +159,12 @@ gulp.task('modules', ['compile', 'libs'], (cb) => {
 
 gulp.task('deploy', () => {
     
-    if(!argv.production)
+    /*if(!argv.production)
     {
         console.warn("*********> You are deploying non-production version! <*********");
-    }
+    }*/
+    
+    argv.production = true;
     
     gulp.src(['.surgeignore', 'CNAME'])
         .pipe(gulp.dest('build'));

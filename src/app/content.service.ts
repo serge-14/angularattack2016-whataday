@@ -19,8 +19,6 @@ export abstract class ContentService {
 @Injectable()
 export class ContentServiceImpl extends ContentService {
 
-    format: Intl.DateTimeFormat = new Intl.DateTimeFormat('en-US', {month: 'long', day: 'numeric'});
-
     constructor(private _http: Http) {
         super();
     }
