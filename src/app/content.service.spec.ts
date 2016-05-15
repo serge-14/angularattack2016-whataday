@@ -27,4 +27,14 @@ describe('Smoke test', () => {
                 expect(result.length).toBe(194);
             });
         })));
+
+    it('should fetch data in proper format',
+        async(inject([ContentService], (cs: ContentService) => {
+            cs.getData(EventType.Deaths, new Date(2016, 4, 6)).then(result => {
+                let first = result[0];
+                expect(first.text).toBe('Engelbrekt Engelbrektsson, Swedish rebel leader (b. 1390)');
+                expect(first.year).toBe(1436);
+                expect(first.id).toBe('00000000-0000-059c-ffff-ffffef96fc8f');
+            });
+        })));
 });

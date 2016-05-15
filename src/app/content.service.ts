@@ -43,7 +43,7 @@ export class ContentServiceImpl extends ContentService {
     private static makeEvents(events: any[]): Array<EventData> {
         const result: Array<EventData> = [];
         for (const e of events) {
-            const ed = new EventData(e.year, e.text, null);
+            const ed = new EventData(e.id, e.year, e.text, null);
             result.push(ed);
         }
         return result;
