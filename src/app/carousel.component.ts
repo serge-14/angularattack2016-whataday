@@ -16,7 +16,7 @@ export class CarouselComponent implements OnInit, AfterViewInit {
 
     @ViewChild('carousel') carousel: ElementRef;
 
-    @Output() slidedTo = new EventEmitter<any>();
+    @Output() slidedTo = new EventEmitter();
 
     constructor() {
     }
@@ -26,14 +26,33 @@ export class CarouselComponent implements OnInit, AfterViewInit {
             interval: 8000
         });
 
-        jQuery(this.carousel.nativeElement).on('slide.bs.carousel', () => {
-            this.slidedTo.emit(null);
+        jQuery(this.carousel.nativeElement).find("[data-index='0']").addClass("active");
+
+        jQuery(this.carousel.nativeElement).on('slide.bs.carousel', (event: any) => {
+            let dataIndex = event.relatedTarget.getAttribute('data-index');
+            this.slidedTo.emit({ value: this.items[dataIndex] });
         });
+
+        this.setActive("00000000-0000-0524-0000-0000564d9b3e");
     }
 
     ngOnInit() {
     }
 
-    addItem(object: any) {
+    eventTrackBy(index: any, item: any) {
+        if (item.id === undefined) {
+            throw "Item in carousel must have id";
+        }
+        return item.id;
+    }
+
+    setActive(id: string) {
+
+        let itemIndex = this.items.findIndex((x) => x.id === id);
+
+        if (itemIndex !== -1) {
+            jQuery(this.carousel.nativeElement).find(".active").removeClass("active");
+            jQuery(this.carousel.nativeElement).find("[data-index='" + itemIndex + "']").addClass("active");
+        }
     }
 }

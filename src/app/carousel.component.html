@@ -2,7 +2,7 @@
     <div class="row">
         <div class="col-xs-offset-2 col-xs-8">
             <div class="carousel-inner">
-                <div *ngFor="let item of items" *ngForTemplate="itemTemplate">
+                <div *ngFor="let item of items let i=index" *ngForTemplate="itemTemplate" *ngForTrackBy="eventTrackBy">
                 </div>
             </div>
         </div>
