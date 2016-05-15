@@ -179,3 +179,12 @@ gulp.task('default', function (callback) {
     callback
   )
 })
+
+/**
+ * Fast
+ */
+gulp.task('fast', function (callback) {
+  runSequence('compile', ['browserSync', 'watch'],
+    callback
+  )
+})

@@ -1,4 +1,4 @@
-import {Component} from '@angular/core';
+import {Component, forwardRef} from '@angular/core';
 import {WelcomeComponent} from './welcome.component';
 import {EventsComponent} from './events.component';
 
@@ -8,7 +8,7 @@ export enum ThemeType {Normal, Green, Grey};
 @Component({
     selector:   'my-app',
     templateUrl: 'app/app.component.html',
-    directives: [WelcomeComponent, EventsComponent]
+    directives: [forwardRef(() => WelcomeComponent), forwardRef(() => EventsComponent)]
 })
 export class AppComponent {
 
