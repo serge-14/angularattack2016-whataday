@@ -1,4 +1,4 @@
-import {Component, provide, forwardRef, OnChanges, ChangeDetectorRef} from '@angular/core';
+import {Component, provide, forwardRef, ChangeDetectorRef} from '@angular/core';
 import {WelcomeComponent} from './welcome.component';
 import {EventsComponent} from './events.component';
 import {ContentService, ContentServiceImpl} from "./content.service";
@@ -13,13 +13,13 @@ export enum ThemeType {Normal, Green, Grey};
     directives: [forwardRef(() => WelcomeComponent), forwardRef(() => EventsComponent), SocialComponent],
     providers: [provide(ContentService, { useClass: ContentServiceImpl })]
 })
-export class AppComponent implements OnChanges {
+export class AppComponent  {
 
     private pageType = PageType; // tslint:disable-line
     private themeType = ThemeType; // tslint:disable-line
 
     private activeTheme: ThemeType = ThemeType.Normal;
-    private activePage: PageType = PageType.Events;
+    private activePage: PageType = PageType.Welcome;
 
     constructor(private cdr: ChangeDetectorRef) {
 
@@ -32,10 +32,6 @@ export class AppComponent implements OnChanges {
 
             this.cdr.detectChanges();
         }
-    }
-
-    ngOnChanges() {
-        console.log("ngOnChanges " + this.activeTheme);
     }
 
     public changePage(page: PageType) {

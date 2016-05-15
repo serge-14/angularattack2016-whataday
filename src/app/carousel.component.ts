@@ -22,8 +22,6 @@ export class CarouselComponent implements OnInit, AfterViewInit {
     }
 
     ngAfterViewInit() {
-        console.log(this.carousel);
-
         jQuery(this.carousel.nativeElement).carousel({
             interval: 8000
         });
@@ -34,10 +32,8 @@ export class CarouselComponent implements OnInit, AfterViewInit {
     }
 
     ngOnInit() {
-        console.log(this.carousel);
     }
 
     addItem(object: any) {
-
     }
 }
