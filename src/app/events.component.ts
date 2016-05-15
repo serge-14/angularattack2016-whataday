@@ -24,10 +24,10 @@ export class EventsComponent implements OnInit {
         @Inject(forwardRef(() => AppComponent)) private app: AppComponent) {};
 
     ngOnInit() {
-        this._service.getData(EventType.Events, this.date).then((events: Array<EventData>) => {
-            this.allEvents = events;
-        });
-
+        this._service.getData(EventType.Events, this.date).subscribe(
+            data => this.allEvents = data,
+            err => console.error(err)
+        );
         this.app.changeTheme(ThemeType.Normal);
     }
 

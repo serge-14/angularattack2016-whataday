@@ -12,6 +12,7 @@
     "suppressImplicitAnyIndexErrors": true
   },
   "exclude": [
+    "build",
     "gulpfile.ts",
     "node_modules",
     "typings/main",
