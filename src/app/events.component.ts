@@ -14,18 +14,19 @@ import {CarouselComponent} from './carousel.component';
 export class EventsComponent implements OnInit {
 
     private allEvents: Array<EventData>;
+    private monthNames: string[] = ["January", "February", "March", "April", "May", "June", // tslint:disable-line
+        "July", "August", "September", "October", "November", "December" ];                 // tslint:disable-line
+    private date: Date = new Date();
 
-    private currentEvent: EventData;
-
-    private currentEventIndex: number = 0; // tslint:disable-line
-
-    constructor(private _service: ContentService, @Inject(forwardRef(() => AppComponent)) private app: AppComponent) {};
+    constructor(
+        private _service: ContentService,
+        @Inject(forwardRef(() => AppComponent)) private app: AppComponent) {};
 
     ngOnInit() {
-        this._service.getData(EventType.Events, new Date()).then((events: Array<EventData>) => {
+        this._service.getData(EventType.Events, this.date).then((events: Array<EventData>) => {
             this.allEvents = events;
-            this.currentEvent = events[0];
         });
+
         this.app.changeTheme(ThemeType.Normal);
     }
 }
