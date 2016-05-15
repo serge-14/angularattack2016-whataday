@@ -52,7 +52,7 @@ export class ContentServiceImpl extends ContentService {
             const text = responseText.substr(start);
             let lines = text.split('\n');
             lines = lines.splice(1); // remove section title
-            let result = [];
+            let result = new Array<EventData>();
             for (let line of lines) {
                 line = line.trim();
                 if (line === '') {

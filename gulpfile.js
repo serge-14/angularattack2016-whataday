@@ -77,7 +77,7 @@ gulp.task("copyicons", () => {
  */
 gulp.task("copyhtml", () => {
     return gulp.src(["src/app/**.html"])
-        .pipe(gulp.dest("build"));
+        .pipe(gulp.dest("build/app"));
 });
 
 /**
