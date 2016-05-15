@@ -87,6 +87,8 @@ export class CarouselComponent implements OnInit, AfterViewInit, OnDestroy, OnCh
                 jQuery(this.carousel.nativeElement).find("[data-index='" + itemIndex + "']").addClass("active");
 
                 this.activeId = null;
+            } else {
+                jQuery(this.carousel.nativeElement).find("[data-index='0']").addClass("active");
             }
         }
     }
