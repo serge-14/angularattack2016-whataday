@@ -44,7 +44,6 @@ div.background {
 a.button, a.button:link, a.button:visited, a.button:active {
     color: #535353;
     font-family: 'Vollkorn', serif;
-    font-size: 48px;
     cursor: pointer;
     transition: color 250ms, font-size 500ms;
 }
@@ -246,13 +245,17 @@ carousel {
 
 /*-----------------Media-------------------*/
 
-@media (max-width: 768px) {
+a.button {
+        font-size: 48px;
+}
+
+@media (max-width: 400px) {
     .carousel-content {
-        height: 50vh;
+        height: 40vh;
     }
     
     .background h1 {
-        font-size: 52px;
+        font-size: 48px;
     }
 
     .background h2 {
@@ -260,11 +263,94 @@ carousel {
     }
         
     .share {
-        font-size: 32px;
+        font-size: 24px;
     }
     
     a.button {
         font-size: 32px;
+    }
+    
+    .background p {
+        font-size: 14px;
+    }
+}
+
+@media  (min-width: 400px) and (max-width: 480px) {
+    .carousel-content {
+        height: 40vh;
+    }
+    
+    .background h1 {
+        font-size: 48px;
+    }
+
+    .background h2 {
+        font-size: 24px;
+    }
+        
+    .share {
+        font-size: 40px;
+    }
+    
+    a.button {
+        font-size: 32px;
+    }
+    
+    .background p {
+        font-size: 16px;
+    }
+}
+
+
+@media (min-width: 480px) and (max-width: 768px) {
+    .carousel-content {
+        height: 50vh;
+    }
+    
+    .background h1 {
+        font-size: 58px;
+    }
+
+    .background h2 {
+        font-size: 32px;
+    }
+        
+    .share {
+        font-size: 52px;
+    }
+    
+    a.button {
+        font-size: 32px;
+    }
+    
+    .background p {
+        font-size: 24px;
+    }
+}
+
+@media (min-width: 768px) and (max-width: 1920px) {
+    .carousel-content {
+        height: 35vh;
+    }
+    
+    .background h1 {
+        font-size: 72px;
+    }
+
+    .background h2 {
+        font-size: 40px;
+    }
+        
+    .share {
+        font-size: 60px;
+    }
+    
+    a.button {
+        font-size: 50px;
+    }
+    
+    .background p {
+        font-size: 28px;
     }
 }
 
