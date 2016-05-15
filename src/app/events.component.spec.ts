@@ -19,6 +19,6 @@ import { PromiseWrapper } from '@angular/core/src/facade/promise';
 
 describe('EventsComponent with new', function () {
   it('should instantiate component', () => {
-    expect(new EventsComponent(null)).toBeDefined('Whoopie!');
+    expect(new EventsComponent(null, null)).toBeDefined('Whoopie!');
   });
 });

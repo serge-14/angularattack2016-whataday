@@ -12,7 +12,6 @@ export abstract class ContentService {
 
 }
 
-
 @Injectable()
 export class ContentServiceImpl extends ContentService {
 
@@ -29,12 +28,16 @@ export class ContentServiceImpl extends ContentService {
         });
 
         const xhr = new XMLHttpRequest();
-        xhr.open('GET', this.makeUrl(date));
+        xhr.open('GET', this.makeUrl(type, date));
+        xhr.withCredentials = true;
+        xhr.setRequestHeader("Content-Type", "application/json; charset=UTF-8");
         xhr.onload = (ev) => {
             if (xhr.status < 200 || xhr.status >= 300) {
+                let json = JSON.parse(xhr.responseText);
+                resultResolve(this.makeEvents(json.events));
+            } else {
                 resultReject(xhr.responseText);
             }
-            resultResolve(this.parseResponse(xhr.responseText, type));
         };
         xhr.onerror = (ev) => {
             resultReject('Unable to get data');
@@ -43,77 +46,33 @@ export class ContentServiceImpl extends ContentService {
         return result;
     }
 
-    private parseResponse(responseText: string, type: EventType): Array<EventData> {
-        const token = ContentServiceImpl.getToken(type);
-        const start = responseText.indexOf(token);
-        if (start < 0) {
-            return [];
-        } else  {
-            const text = responseText.substr(start);
-            let lines = text.split('\n');
-            lines = lines.splice(1); // remove section title
-            let result = new Array<EventData>();
-            for (let line of lines) {
-                line = line.trim();
-                if (line === '') {
-                    break;
-                } else {
-                    const data = this.makeData(type, line);
-                    if (data !== null) {
-                        result.push(data);
-                    }
-                }
-            }
-            return result;
+    private makeEvents(events: any[]): Array<EventData> {
+        const result = [];
+        for (const e of events) {
+            const ed = new EventData(e.year, e.text, null);
+            result.push(ed);
         }
+        return result;
     }
 
-    private makeData(type: EventType, line: string) {
-        const ndash = line.indexOf('&ndash;');
-        if (ndash < 0) {
-            return null;
-        }
-        const year = parseInt(this.dropBrackets(line.substr(1, ndash)), 10);
-        const restLine = line.substr(ndash + 7);
-        return new EventData(type, year, this.dropBrackets(restLine), null);
-
+    private makeUrl(type: EventType, date: Date): string {
+        const fullDate = date.toISOString();
+        let strDate = fullDate.split('T')[0];
+        const lt = this.getLiteral(type);
+        return `https://attack-supplies.rhcloud.com/events?type=${lt}&date=${strDate}`;
     }
 
-    private dropBrackets(str: string): string {
-        const regexp = /(.*)[[(.*)]](.*)/;
-        const result = regexp.exec(str);
-        if (result.index > 0) {
-            const int_res = result[1] + ContentServiceImpl.takeFirst(result[2]) + result[3];
-            return this.dropBrackets(int_res);
-        }
-        return str;
-    }
-
-    private static takeFirst(str: string) {
-        const index = str.indexOf('|');
-        if (index > 0) {
-            return str.substr(0, index);
-        }
-        return str;
-    }
-
-    private static getToken(type: EventType): string {
+    private getLiteral(type: EventType) {
         switch (type) {
             case EventType.Events:
-                return '==Events==';
+                return 'EVENTS';
             case EventType.Births:
-                return '==Births==';
+                return 'BIRTHS';
             case EventType.Deaths:
-                return '==Deaths==';
+                return 'DEATHS';
             case EventType.Holidays:
-                return '==Holidays and observances==';
+                return 'HOLIDAYS';
         }
-    }
-
-    private makeUrl(date: Date): string {
-        let strDate = this.format.format(date);
-        strDate = strDate.replace(/ /g, '_');
-        return 'https://en.wikipedia.org/wiki/' + strDate + '?action=raw';
     }
 
 }

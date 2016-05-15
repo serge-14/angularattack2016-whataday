@@ -59,19 +59,19 @@ describe('AppComponent with TCB', function () {
     async(inject([TestComponentBuilder], (tcb: TestComponentBuilder) => {
 
       tcb.createAsync(AppComponent).then(fixture => {
-        
-        fixture.detectChanges();
+
+         fixture.detectChanges();
 
         (<AppComponent>fixture.componentInstance).changeTheme(ThemeType.Green);
-        
+
          fixture.detectChanges();
-        
-        const element = fixture.debugElement.nativeElement.childNodes[0];
-        expect(element.classList.contains('green')).toBe(true);
+
+         const element = fixture.debugElement.nativeElement.childNodes[0];
+         expect(element.classList.contains('green')).toBe(true);
     });
 
   })));
-  
+
   it('should change theme to grey',
     async(inject([TestComponentBuilder], (tcb: TestComponentBuilder) => {
 
@@ -80,46 +80,46 @@ describe('AppComponent with TCB', function () {
         fixture.detectChanges();
 
         (<AppComponent>fixture.componentInstance).changeTheme(ThemeType.Grey);
-        
+
          fixture.detectChanges();
-        
+
         const element = fixture.debugElement.nativeElement.childNodes[0];
         expect(element.classList.contains('grey')).toBe(true);
     });
 
   })));
-  
+
   it('should have only welcome page',
     async(inject([TestComponentBuilder], (tcb: TestComponentBuilder) => {
 
       tcb.createAsync(AppComponent).then(fixture => {
-        
+
         fixture.detectChanges();
-        
-        const welcome = fixture.debugElement.query(By.css('welcome')).nativeElement;  
+
+        const welcome = fixture.debugElement.query(By.css('welcome')).nativeElement;
         expect(welcome).not.toBeNull();
-        
-        const events = fixture.debugElement.query(By.css('events'));  
+
+        const events = fixture.debugElement.query(By.css('events'));
         expect(events).toBeNull();
     });
 
   })));
-  
+
     it('should open only event page',
     async(inject([TestComponentBuilder], (tcb: TestComponentBuilder) => {
 
       tcb.createAsync(AppComponent).then(fixture => {
-        
+
         fixture.detectChanges();
-        
+
          (<AppComponent>fixture.componentInstance).changePage(PageType.Events);
-        
+
          fixture.detectChanges();
-         
-        const welcome = fixture.debugElement.query(By.css('welcome'));  
+
+        const welcome = fixture.debugElement.query(By.css('welcome'));
         expect(welcome).toBeNull();
-        
-        const events = fixture.debugElement.query(By.css('events')).nativeElement;  
+
+        const events = fixture.debugElement.query(By.css('events')).nativeElement;
         expect(events).not.toBeNull();
     });
 
