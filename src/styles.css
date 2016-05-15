@@ -180,6 +180,50 @@ carousel {
     width:100%;
 }
 
+.filter a {
+    padding-left: 10px;
+    padding-right: 10px;
+}
+
+.small-button {
+    font-size: 15px;
+    padding: 10px;
+    border-radius: 5px;
+}
+
+a.small-button, a.small-button:link, a.small-button:visited, a.small-button:active {
+    color: #AAAAAA;
+    font-family: 'Vollkorn', serif;
+    cursor: pointer;
+    transition: color 250ms, font-size 500ms, background-color 500ms;
+    text-decoration: none;
+}
+
+a.small-button:hover {
+    color: #939393;
+    text-decoration: none;
+}
+
+.enabled.small-button {
+  color: white;
+  background: #535353;
+}
+
+.enabled.small-button, .enabled.small-button:link, .enabled.small-button:visited, .enabled.small-button:active {
+    color: white;
+}
+
+.enabled.small-button:hover {
+  color: white;
+}
+
+/*
+.enabled.small-button:before {
+  content: "\f00c";
+  font-family: FontAwesome;
+   float: left;
+}
+*/
 /*-----------------Green-------------------*/
 
 .green {
@@ -187,11 +231,19 @@ carousel {
     color: white;
 }
 
-.green a.button, .green a.button:link, .green a.button:visited, .green a.button:active {
+.green a.button,
+.green a.button:link,
+.green a.button:visited,
+.green a.button:active,
+.green .small-button,
+.green a.small-button:link,
+.green a.small-button:visited,
+.green a.small-button:active {
     color: white;
 }
 
-.green a.button:hover {
+.green a.button:hover,
+.green a.small-button:hover {
     color: #bff3e2;
 }
 
@@ -218,11 +270,19 @@ carousel {
     color: white;
 }
 
-.grey a.button, .grey a.button:link, .grey a.button:visited, .grey a.button:active {
+.grey a.button,
+.grey a.button:link,
+.grey a.button:visited,
+.grey a.button:active,
+.grey a.small-button,
+.grey a.small-button:link,
+.grey a.small-button:visited,
+.grey a.small-button:active {
     color: white;
 }
 
-.grey a.button:hover {
+.grey a.button:hover,
+.grey a.small-button:hover {
     color: #dcdbd4;
 }
 

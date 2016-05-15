@@ -4,10 +4,12 @@
         <h1>{{ monthNames[date.getMonth()] }} {{ date.getDate() }}</h1>
     </div>
     <div class="row vertical-align" style="margin-top:50px;">
-        <carousel *ngIf="allEvents" [items]="allEvents" (slidedTo)="onSlided();">
-            <div template="let item let i=index"  class="item" [class.active]="i==0">
+        <carousel *ngIf="allEvents" [items]="allEvents" (slidedTo)="onSlided($event);">
+            <div template="let item let i=index"  class="item" [attr.data-index]="i">
             <div class="carousel-content">
                     <div style="padding-left:25px;padding-right:25px">
+                        <h2>Born</h2>
+                        <h2 *ngIf="false">Died</h2>
                         <p>{{ item.text }}</p>
                         <h2>{{ item.year }}</h2>
                     </div>
@@ -16,4 +18,9 @@
         </carousel>
         <h2 class="carousel-content" style="margin:0;" *ngIf="allEvents==null"><span class="glyphicon glyphicon-refresh glyphicon-refresh-animate"></span></h2>
     </div>
+</div>
+<div class="filter text-center">
+    <a class="small-button" [class.enabled]="eventFilter[0]" (click)="swtichFilter(0);">Events</a>
+    <a class="small-button" [class.enabled]="eventFilter[1]" (click)="swtichFilter(1);">Births</a>
+    <a class="small-button" [class.enabled]="eventFilter[2]" (click)="swtichFilter(2);">Deaths</a>
 </div>
