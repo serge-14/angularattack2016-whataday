@@ -10,11 +10,11 @@ export enum ThemeType {Normal, Green, Grey}
 @Component({
     selector: 'my-app',
     templateUrl: 'app/app.component.html',
-    directives: [ROUTER_DIRECTIVES],
+    directives: [ROUTER_DIRECTIVES, SocialComponent],
     providers: [provide(ContentService, {useClass: ContentServiceImpl})]
 })
 @Routes([
-    { path: '/event/', component: EventsComponent },
+    { path: '/event', component: EventsComponent },
     { path: '/', component: WelcomeComponent }
 ])
 export class AppComponent implements OnInit {
@@ -36,7 +36,7 @@ export class AppComponent implements OnInit {
 
     ngOnInit() {
         let ref = setTimeout(() => {
-            this._router.navigate(["/event/"]);
+            this._router.navigate(["/event"]);
         }, 10000);
         this._router.changes.subscribe(() => {
             clearTimeout(ref);
