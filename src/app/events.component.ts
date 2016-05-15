@@ -24,7 +24,7 @@ export class EventsComponent implements OnInit {
         @Inject(forwardRef(() => AppComponent)) private app: AppComponent) {};
 
     ngOnInit() {
-        this._service.getData(EventType.Events, this.date).then((events: Array<EventData>) => {
+        this._service.getData(EventType.Births, this.date).then((events: Array<EventData>) => {
             this.allEvents = events;
         });
 
@@ -35,7 +35,9 @@ export class EventsComponent implements OnInit {
         this.app.changePage(PageType.Welcome);
     }
 
-    onSlided() {
+    onSlided(event: any) {
+
+        console.log(event.value.id);
 
         this.current++;
 
