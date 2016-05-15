@@ -31,7 +31,7 @@ export class CarouselComponent implements OnInit, AfterViewInit, OnDestroy, OnCh
             interval: 8000
         });
 
-        if (!this.activeId) {
+        if (this.activeId !== undefined) {
             jQuery(this.carousel.nativeElement).find("[data-index='0']").addClass("active");
         } else {
             this.setActive(this.activeId);
@@ -85,8 +85,6 @@ export class CarouselComponent implements OnInit, AfterViewInit, OnDestroy, OnCh
             if (itemIndex !== -1) {
                 jQuery(this.carousel.nativeElement).find(".active").removeClass("active");
                 jQuery(this.carousel.nativeElement).find("[data-index='" + itemIndex + "']").addClass("active");
-
-                this.activeId = null;
             } else {
                 jQuery(this.carousel.nativeElement).find("[data-index='0']").addClass("active");
             }
