@@ -1,24 +1,32 @@
 import {Component} from '@angular/core';
+import {WelcomeComponent} from './welcome.component';
+import {EventsComponent} from './events.component';
+
+export enum PageType {Welcome, Events};
+export enum ThemeType {Normal, Green, Grey};
 
 @Component({
     selector:   'my-app',
-    templateUrl: 'app/app.component.html'
+    templateUrl: 'app/app.component.html',
+    directives: [WelcomeComponent, EventsComponent]
 })
 export class AppComponent {
 
-    private themeName: String = '';
+    private pageType = PageType; // tslint:disable-line
+    private themeType = ThemeType; // tslint:disable-line
 
-    get isGreenTheme(): boolean {
-        return this.themeName === 'green';
+    private activeTheme: ThemeType = ThemeType.Normal;
+    private activePage: PageType = PageType.Welcome;
+
+    public changeTheme(theme: ThemeType) {
+        if (this.activeTheme !== theme) {
+            this.activeTheme = theme;
+        }
     }
 
-    get isGreyTheme(): boolean {
-        return this.themeName === 'grey';
-    }
-
-    public changeTheme(nextTheme: String) {
-        if (this.themeName !== nextTheme) {
-            this.themeName = nextTheme;
+    public changePage(page: PageType) {
+        if (this.activePage !== page) {
+            this.activePage = page;
         }
     }
 }

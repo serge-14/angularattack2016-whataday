@@ -1,5 +1,5 @@
 /* tslint:disable:no-unused-variable */
-import { AppComponent } from './app.component';
+import { AppComponent, PageType, ThemeType } from './app.component';
 
 import {
   expect, it, iit, xit,
@@ -51,6 +51,19 @@ describe('AppComponent with TCB', function () {
           div = fixture.debugElement.query(By.css('div')).nativeElement;            // preferred
 
       expect(div.innerText).toMatch('');
+    });
+
+  })));
+
+  it('should change theme to green',
+    async(inject([TestComponentBuilder], (tcb: TestComponentBuilder) => {
+
+      tcb.createAsync(AppComponent).then(fixture => {
+        (<AppComponent>fixture.componentInstance).changeTheme(ThemeType.Green);
+
+        const element = fixture.debugElement.nativeElement;
+
+        expect(element).toHaveClass('green');
     });
 
   })));

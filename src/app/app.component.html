@@ -1,2 +1,20 @@
-<div class="background" [class.green]="isGreenTheme" [class.grey]="isGreyTheme">
+<div class="background" [class.green]="activeTheme==themeType.Green" [class.grey]="activeTheme==themeType.Grey">
+    <div class="container vertical-center">
+        <div [ngSwitch]="activePage">
+            <div *ngSwitchWhen="pageType.Welcome">
+                <welcome></welcome>
+            </div>
+            <div *ngSwitchWhen="pageType.Events">
+                <events></events>
+            </div>
+        </div>
+    </div>
+    <footer>
+        <div class="text-center share">
+            <a href="#"><i class="fa fa-twitter" aria-hidden="true"></i></a>
+            <a href="#"><i class="fa fa-facebook" aria-hidden="true"></i></a>
+            <a href="#"><i class="fa fa-google-plus" aria-hidden="true"></i></a>
+            <a href="#"><i class="fa fa-pinterest" aria-hidden="true"></i></a>
+        </div>
+    </footer>
 </div>

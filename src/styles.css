@@ -5,8 +5,7 @@ html,body{
 .background {
     background-color: #F7F0CD;
     color: #535353;
-    transition: color 500ms;
-    transition: background-color 500ms;
+    transition: background-color 500ms, color 500ms;
 }
 
 div.background {
@@ -41,16 +40,13 @@ div.background {
     justify-content : center;
 }
 
-a.button {
+
+a.button, a.button:link, a.button:visited, a.button:active {
+    color: #535353;
     font-family: 'Vollkorn', serif;
     font-size: 48px;
     cursor: pointer;
-    transition: color 250ms;
-    transition: font-size 500ms;
-}
-
-a.button:link, a.button:visited, a.button:active {
-    color: #535353;
+    transition: color 250ms, font-size 500ms;
 }
 
 a.button:hover {
@@ -168,6 +164,16 @@ header {
     background-image: linear-gradient(to right, rgba(0,0,0,.0001) 0%, #F7F0CD 100%);
 }
 
+.glyphicon-refresh-animate {
+    animation: spin .7s infinite linear;
+    font-size: 72px;
+}
+
+@keyframes spin {
+    from { transform: scale(1) rotate(0deg);}
+    to { transform: scale(1) rotate(360deg);}
+}
+
 /*-----------------Green-------------------*/
 
 .green {
@@ -175,7 +181,7 @@ header {
     color: white;
 }
 
-.green a.button:link, .green a.button:visited, .green a.button:active {
+.green a.button, .green a.button:link, .green a.button:visited, .green a.button:active {
     color: white;
 }
 
