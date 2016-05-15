@@ -11,6 +11,6 @@ export class WelcomeComponent {
     }
 
     onExploreClicked() {
-        this._router.navigate(["/event/any"]);
+        this._router.navigate(["/event/"]);
     }
 }
