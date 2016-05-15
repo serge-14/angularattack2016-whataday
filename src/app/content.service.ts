@@ -7,6 +7,7 @@ import {EventData} from "./model/event.data";
 import {Http, Headers, RequestOptionsArgs, URLSearchParams, Response} from "@angular/http";
 import {Observable} from "rxjs/Observable";
 import "rxjs/add/operator/map";
+import "rxjs/add/operator/delay";
 
 @Injectable()
 export abstract class ContentService {
@@ -30,6 +31,7 @@ export class ContentServiceImpl extends ContentService {
         return this._http.get("https://attack-supplies.rhcloud.com/events", {
                 search: ContentServiceImpl.makeParams(type, date)
             } as RequestOptionsArgs)
+            .delay(250)
             .map((res: Response) => {
                 let json = res.json();
                 return ContentServiceImpl.makeEvents(json.events);

@@ -4,7 +4,7 @@
         <h1>{{ monthNames[date.getMonth()] }} {{ date.getDate() }}</h1>
     </div>
     <div class="row vertical-align" style="margin-top:50px;">
-        <carousel *ngIf="allEvents" [items]="allEvents" (slidedTo)="onSlided($event);">
+        <carousel *ngIf="allEvents" [items]="allEvents" (slidedTo)="onSlided($event);" [activeId]="eventId">
             <div template="let item let i=index"  class="item" [attr.data-index]="i">
             <div class="carousel-content">
                     <div style="padding-left:25px;padding-right:25px">

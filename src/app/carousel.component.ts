@@ -1,5 +1,5 @@
 import {Component, OnInit, TemplateRef, ContentChild, Input, ElementRef,
-    ViewChild, AfterViewInit, Output, EventEmitter, OnDestroy} from '@angular/core';
+    ViewChild, AfterViewInit, Output, EventEmitter, OnDestroy, OnChanges, SimpleChange } from '@angular/core';
 
 declare var jQuery: any;
 
@@ -7,12 +7,16 @@ declare var jQuery: any;
     selector: 'carousel',
     templateUrl: 'app/carousel.component.html'
 })
-export class CarouselComponent implements OnInit, AfterViewInit, OnDestroy {
+export class CarouselComponent implements OnInit, AfterViewInit, OnDestroy, OnChanges {
     @ContentChild(TemplateRef)
     public itemTemplate: TemplateRef<any>;
 
     @Input()
     public items: any[];
+
+    @Input()
+    public activeId: any;
+    private currentId: any;
 
     @ViewChild('carousel') carousel: ElementRef;
 
@@ -27,10 +31,15 @@ export class CarouselComponent implements OnInit, AfterViewInit, OnDestroy {
             interval: 8000
         });
 
-        jQuery(this.carousel.nativeElement).find("[data-index='0']").addClass("active");
+        if (!this.activeId) {
+            jQuery(this.carousel.nativeElement).find("[data-index='0']").addClass("active");
+        } else {
+            this.setActive(this.activeId);
+        }
 
         jQuery(this.carousel.nativeElement).on('slide.bs.carousel', (event: any) => {
             let dataIndex = event.relatedTarget.getAttribute('data-index');
+            this.currentId = this.eventTrackBy(0, this.items[dataIndex]);
             this.slidedTo.emit({ value: this.items[dataIndex] });
         });
 
@@ -38,6 +47,14 @@ export class CarouselComponent implements OnInit, AfterViewInit, OnDestroy {
     }
 
     ngOnInit() {
+    }
+
+    ngOnChanges(changes: {
+        [key: string]: SimpleChange;
+    }) {
+        if (changes["activeId"] !== undefined && this.currentId !== this.activeId) {
+            this.setActive(this.activeId);
+        }
     }
 
     ngOnDestroy() {
@@ -62,12 +79,15 @@ export class CarouselComponent implements OnInit, AfterViewInit, OnDestroy {
     }
 
     setActive(id: string) {
+        if (this.carousel) {
+            let itemIndex = this.items.findIndex((x) => x.id === id);
 
-        let itemIndex = this.items.findIndex((x) => x.id === id);
+            if (itemIndex !== -1) {
+                jQuery(this.carousel.nativeElement).find(".active").removeClass("active");
+                jQuery(this.carousel.nativeElement).find("[data-index='" + itemIndex + "']").addClass("active");
 
-        if (itemIndex !== -1) {
-            jQuery(this.carousel.nativeElement).find(".active").removeClass("active");
-            jQuery(this.carousel.nativeElement).find("[data-index='" + itemIndex + "']").addClass("active");
+                this.activeId = null;
+            }
         }
     }
 }
