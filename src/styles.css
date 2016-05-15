@@ -91,6 +91,7 @@ footer {
 
 .share a:hover {
     color: #FFFDE0;
+    text-decoration: none;
 }
 
 .navigation {

@@ -2,6 +2,7 @@ import {Component, provide, forwardRef } from '@angular/core';
 import {WelcomeComponent} from './welcome.component';
 import {EventsComponent} from './events.component';
 import {ContentService, ContentServiceImpl} from "./content.service";
+import {SocialComponent} from "./social.component";
 
 export enum PageType {Welcome, Events};
 export enum ThemeType {Normal, Green, Grey};
@@ -9,7 +10,7 @@ export enum ThemeType {Normal, Green, Grey};
 @Component({
     selector:   'my-app',
     templateUrl: 'app/app.component.html',
-    directives: [forwardRef(() => WelcomeComponent), forwardRef(() => EventsComponent)],
+    directives: [forwardRef(() => WelcomeComponent), forwardRef(() => EventsComponent), SocialComponent],
     providers: [provide(ContentService, { useClass: ContentServiceImpl })]
 })
 export class AppComponent {
