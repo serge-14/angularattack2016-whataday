@@ -32,8 +32,6 @@ export class CarouselComponent implements OnInit, AfterViewInit {
             let dataIndex = event.relatedTarget.getAttribute('data-index');
             this.slidedTo.emit({ value: this.items[dataIndex] });
         });
-
-        this.setActive("00000000-0000-0524-0000-0000564d9b3e");
     }
 
     ngOnInit() {
