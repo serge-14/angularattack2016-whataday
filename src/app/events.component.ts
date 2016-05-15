@@ -25,7 +25,7 @@ export class EventsComponent implements OnInit, OnActivate {
     constructor(private _service: ContentService, private _router: Router) {};
 
     ngOnInit() {
-        this._service.getData(EventType.Births, this.date).subscribe(
+        this._service.getData(EventType.Events, this.date).subscribe(
             data => this.allEvents = data,
             err => console.error(err)
         );

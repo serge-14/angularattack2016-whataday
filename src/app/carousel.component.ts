@@ -1,5 +1,5 @@
 import {Component, OnInit, TemplateRef, ContentChild, Input, ElementRef,
-    ViewChild, AfterViewInit, Output, EventEmitter} from '@angular/core';
+    ViewChild, AfterViewInit, Output, EventEmitter, OnDestroy} from '@angular/core';
 
 declare var jQuery: any;
 
@@ -7,7 +7,7 @@ declare var jQuery: any;
     selector: 'carousel',
     templateUrl: 'app/carousel.component.html'
 })
-export class CarouselComponent implements OnInit, AfterViewInit {
+export class CarouselComponent implements OnInit, AfterViewInit, OnDestroy {
     @ContentChild(TemplateRef)
     public itemTemplate: TemplateRef<any>;
 
@@ -17,6 +17,7 @@ export class CarouselComponent implements OnInit, AfterViewInit {
     @ViewChild('carousel') carousel: ElementRef;
 
     @Output() slidedTo = new EventEmitter();
+    private eventHandler: any = (e: any) => { this.keybardHandler(e); };
 
     constructor() {
     }
@@ -32,9 +33,25 @@ export class CarouselComponent implements OnInit, AfterViewInit {
             let dataIndex = event.relatedTarget.getAttribute('data-index');
             this.slidedTo.emit({ value: this.items[dataIndex] });
         });
+
+        jQuery(document).bind('keyup', this.eventHandler);
     }
 
     ngOnInit() {
+    }
+
+    ngOnDestroy() {
+        jQuery(document).unbind('keyup', this.eventHandler);
+    }
+
+    keybardHandler(e: any) {
+        if (e.keyCode === 39) {
+            jQuery(this.carousel.nativeElement).carousel('next');
+        } else if (e.keyCode === 37) {
+            jQuery(this.carousel.nativeElement).carousel('prev');
+        }
+
+        console.log("keyup");
     }
 
     eventTrackBy(index: any, item: any) {

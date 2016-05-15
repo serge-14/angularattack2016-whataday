@@ -41,10 +41,10 @@ export class AppComponent implements OnInit {
             if (selected === null) {
                 this.changeTheme(ThemeType.Normal);
             } else {
-                const path = selected.segment;
+/*                const path = selected.segment;
                 if (path === "event") {
                     this.changeTheme(ThemeType.Green);
-                }
+                }*/
             }
         });
         setTimeout(() => {
