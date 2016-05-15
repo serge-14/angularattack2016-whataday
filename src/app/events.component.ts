@@ -18,13 +18,14 @@ export class EventsComponent implements OnInit {
     private monthNames: string[] = ["January", "February", "March", "April", "May", "June", // tslint:disable-line
         "July", "August", "September", "October", "November", "December" ];                 // tslint:disable-line
     private date: Date = new Date();
+    private eventFilter: boolean[] = [true, false, false];// tslint:disable-line
 
     constructor(
         private _service: ContentService,
         @Inject(forwardRef(() => AppComponent)) private app: AppComponent) {};
 
     ngOnInit() {
-        this._service.getData(EventType.Events, this.date).subscribe(
+        this._service.getData(EventType.Births, this.date).subscribe(
             data => this.allEvents = data,
             err => console.error(err)
         );
@@ -37,8 +38,6 @@ export class EventsComponent implements OnInit {
 
     onSlided(event: any) {
 
-        console.log(event.value.id);
-
         this.current++;
 
         if (this.current > ThemeType.Grey) {
@@ -46,6 +45,10 @@ export class EventsComponent implements OnInit {
         }
 
         this.app.changeTheme(this.current);
+    }
+
+    swtichFilter(index: number) {
+        this.eventFilter[index] = !this.eventFilter[index];
     }
 }
 
