@@ -1,19 +1,25 @@
 /* tslint:disable:no-unused-variable */
-import { AppComponent, PageType, ThemeType } from './app.component';
+import { AppComponent, ThemeType } from './app.component';
 
 import {
   expect, it, iit, xit,
   describe, ddescribe, xdescribe,
-  beforeEach, beforeEachProviders, withProviders,
+  beforeEach, beforeEachProviders, withProviders, setBaseTestProviders,
   async, inject
 } from '@angular/core/testing';
 
 import { TestComponentBuilder } from '@angular/compiler/testing';
 
 import { By }             from '@angular/platform-browser';
-import { provide }        from '@angular/core';
+import { provide, ComponentResolver }        from '@angular/core';
+
+import {Location} from '@angular/common';
+import {SpyLocation} from '@angular/common/testing';
+import {ROUTER_FAKE_PROVIDERS} from '@angular/router/testing';
+import {RootRouter} from '@angular/router-deprecated/src/router';
 import { ViewMetadata }   from '@angular/core';
 import { PromiseWrapper } from '@angular/core/src/facade/promise';
+
 
 ////////  SPECS  /////////////
 
@@ -24,11 +30,10 @@ describe('Smoke test', () => {
   });
 });
 
-describe('AppComponent with new', function () {
-  it('should instantiate component', () => {
-    expect(new AppComponent()).toBeDefined('Whoopie!');
-  });
-});
+beforeEachProviders(() => [
+    ROUTER_FAKE_PROVIDERS
+]);
+
 
 describe('AppComponent with TCB', function () {
 
@@ -51,76 +56,6 @@ describe('AppComponent with TCB', function () {
           div = fixture.debugElement.query(By.css('div')).nativeElement;            // preferred
 
       expect(div.innerText).toMatch('');
-    });
-
-  })));
-
-  it('should change theme to green',
-    async(inject([TestComponentBuilder], (tcb: TestComponentBuilder) => {
-
-      tcb.createAsync(AppComponent).then(fixture => {
-
-         fixture.detectChanges();
-
-        (<AppComponent>fixture.componentInstance).changeTheme(ThemeType.Green);
-
-         fixture.detectChanges();
-
-         const element = fixture.debugElement.nativeElement.childNodes[0];
-         expect(element.classList.contains('green')).toBe(true);
-    });
-
-  })));
-
-  it('should change theme to grey',
-    async(inject([TestComponentBuilder], (tcb: TestComponentBuilder) => {
-
-      tcb.createAsync(AppComponent).then(fixture => {
-
-        fixture.detectChanges();
-
-        (<AppComponent>fixture.componentInstance).changeTheme(ThemeType.Grey);
-
-         fixture.detectChanges();
-
-        const element = fixture.debugElement.nativeElement.childNodes[0];
-        expect(element.classList.contains('grey')).toBe(true);
-    });
-
-  })));
-
-  it('should have only welcome page',
-    async(inject([TestComponentBuilder], (tcb: TestComponentBuilder) => {
-
-      tcb.createAsync(AppComponent).then(fixture => {
-
-        fixture.detectChanges();
-
-        const welcome = fixture.debugElement.query(By.css('welcome')).nativeElement;
-        expect(welcome).not.toBeNull();
-
-        const events = fixture.debugElement.query(By.css('events'));
-        expect(events).toBeNull();
-    });
-
-  })));
-
-    it('should open only event page',
-    async(inject([TestComponentBuilder], (tcb: TestComponentBuilder) => {
-
-      tcb.createAsync(AppComponent).then(fixture => {
-
-        fixture.detectChanges();
-
-         (<AppComponent>fixture.componentInstance).changePage(PageType.Events);
-
-         fixture.detectChanges();
-
-        const welcome = fixture.debugElement.query(By.css('welcome'));
-        expect(welcome).toBeNull();
-
-        const events = fixture.debugElement.query(By.css('events')).nativeElement;
-        expect(events).not.toBeNull();
     });
 
   })));

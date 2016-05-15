@@ -1,5 +1,6 @@
-import {Component, OnInit, Inject, forwardRef} from '@angular/core';
-import {AppComponent, ThemeType, PageType} from './app.component';
+import {Component, OnInit} from '@angular/core';
+import { OnActivate, Router, RouteSegment } from '@angular/router';
+import { ThemeType} from './app.component';
 import {EventData} from './model/event.data';
 import {EventType} from "./model/event.type";
 import {ContentService} from "./content.service";
@@ -11,32 +12,35 @@ import {CarouselComponent} from './carousel.component';
     templateUrl: 'app/events.component.html',
     directives: [CarouselComponent]
 })
-export class EventsComponent implements OnInit {
+export class EventsComponent implements OnInit, OnActivate {
 
     private current: ThemeType = ThemeType.Normal;
     private allEvents: Array<EventData>;
+    private eventId: String;
     private monthNames: string[] = ["January", "February", "March", "April", "May", "June", // tslint:disable-line
         "July", "August", "September", "October", "November", "December" ];                 // tslint:disable-line
     private date: Date = new Date();
     private eventFilter: boolean[] = [true, false, false];// tslint:disable-line
 
-    constructor(
-        private _service: ContentService,
-        @Inject(forwardRef(() => AppComponent)) private app: AppComponent) {};
+    constructor(private _service: ContentService, private _router: Router) {};
 
     ngOnInit() {
         this._service.getData(EventType.Births, this.date).subscribe(
             data => this.allEvents = data,
             err => console.error(err)
         );
-        this.app.changeTheme(ThemeType.Normal);
+    }
+
+    routerOnActivate(curr: RouteSegment): void {
+        this.eventId = curr.getParam('eventId');
     }
 
     onBackClicked() {
-        this.app.changePage(PageType.Welcome);
+        this._router.navigate(["/"]);
     }
 
     onSlided(event: any) {
+        this.eventId = event.value.id;
 
         this.current++;
 
@@ -44,7 +48,7 @@ export class EventsComponent implements OnInit {
             this.current = ThemeType.Normal;
         }
 
-        this.app.changeTheme(this.current);
+        // this.app.changeTheme(this.current);
     }
 
     swtichFilter(index: number) {

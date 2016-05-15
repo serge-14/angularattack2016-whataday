@@ -1,21 +1,16 @@
-import {Component, OnInit, forwardRef, Inject} from '@angular/core';
-import {AppComponent, PageType, ThemeType} from './app.component';
+import {Component} from '@angular/core';
+import { Router } from '@angular/router';
 
 @Component({
     selector:   'welcome',
     templateUrl: 'app/welcome.component.html'
 })
-export class WelcomeComponent implements OnInit {
+export class WelcomeComponent {
 
-    constructor(
-        @Inject(forwardRef(() => AppComponent)) private app: AppComponent) {
-    }
-
-    ngOnInit() {
-        this.app.changeTheme(ThemeType.Normal);
+    constructor(private _router: Router) {
     }
 
     onExploreClicked() {
-        this.app.changePage(PageType.Events);
+        this._router.navigate(["/event/any"]);
     }
 }
