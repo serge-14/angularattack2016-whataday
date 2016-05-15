@@ -24,7 +24,7 @@ describe('Smoke test', () => {
     it('should fetch exact data',
         async(inject([ContentService], (cs: ContentService) => {
             cs.getData(EventType.Births, new Date(2016, 4, 6)).then(result => {
-                expect(result.length).toBeGreaterThan(0);
+                expect(result.length).toBe(50);
             });
         })));
 });

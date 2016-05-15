@@ -18,35 +18,29 @@ export class ContentServiceImpl extends ContentService {
     format: Intl.DateTimeFormat = new Intl.DateTimeFormat('en-US', {month: 'long', day: 'numeric'});
 
     getData(type: EventType, date: Date): Promise<Array<EventData>> {
+        return new Promise(function(resolve, reject) {
 
-        let resultResolve: (value?: any) => void;
-        let resultReject: (error?: any) => void;
+            const xhr = new XMLHttpRequest();
+            xhr.open('GET', ContentServiceImpl.makeUrl(type, date));
+            xhr.withCredentials = true;
+            xhr.setRequestHeader("Content-Type", "application/json; charset=UTF-8");
+            xhr.onload = (ev) => {
+                if (xhr.status < 200 || xhr.status >= 300) {
+                    reject(xhr.responseText);
+                } else {
+                    let json = JSON.parse(xhr.responseText);
+                    resolve(ContentServiceImpl.makeEvents(json.events));
+                }
+            };
+            xhr.onerror = (ev) => {
+                reject('Unable to get data');
+            };
+            xhr.send(null);
 
-        const result = new Promise((resolve: (value?: any) => void, reject: (error?: any) => void) => {
-            resultResolve = resolve;
-            resultResolve = reject;
         });
-
-        const xhr = new XMLHttpRequest();
-        xhr.open('GET', this.makeUrl(type, date));
-        xhr.withCredentials = true;
-        xhr.setRequestHeader("Content-Type", "application/json; charset=UTF-8");
-        xhr.onload = (ev) => {
-            if (xhr.status < 200 || xhr.status >= 300) {
-                let json = JSON.parse(xhr.responseText);
-                resultResolve(this.makeEvents(json.events));
-            } else {
-                resultReject(xhr.responseText);
-            }
-        };
-        xhr.onerror = (ev) => {
-            resultReject('Unable to get data');
-        };
-        xhr.send(null);
-        return result;
     }
 
-    private makeEvents(events: any[]): Array<EventData> {
+    private static makeEvents(events: any[]): Array<EventData> {
         const result = [];
         for (const e of events) {
             const ed = new EventData(e.year, e.text, null);
@@ -55,14 +49,14 @@ export class ContentServiceImpl extends ContentService {
         return result;
     }
 
-    private makeUrl(type: EventType, date: Date): string {
+    private static makeUrl(type: EventType, date: Date): string {
         const fullDate = date.toISOString();
         let strDate = fullDate.split('T')[0];
-        const lt = this.getLiteral(type);
+        const lt = ContentServiceImpl.getLiteral(type);
         return `https://attack-supplies.rhcloud.com/events?type=${lt}&date=${strDate}`;
     }
 
-    private getLiteral(type: EventType) {
+    private static getLiteral(type: EventType) {
         switch (type) {
             case EventType.Events:
                 return 'EVENTS';
