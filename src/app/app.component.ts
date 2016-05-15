@@ -9,8 +9,8 @@ export enum ThemeType {Normal, Green, Grey};
 @Component({
     selector:   'my-app',
     templateUrl: 'app/app.component.html',
-    directives: [forwardRef(() => WelcomeComponent), forwardRef(() => EventsComponent)]
-        providers: [provide(ContentService, { useClass: ContentServiceImpl })]
+    directives: [forwardRef(() => WelcomeComponent), forwardRef(() => EventsComponent)],
+    providers: [provide(ContentService, { useClass: ContentServiceImpl })]
 })
 export class AppComponent {
 
