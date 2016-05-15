@@ -27,10 +27,6 @@ export class CarouselComponent implements OnInit, AfterViewInit, OnDestroy, OnCh
     }
 
     ngAfterViewInit() {
-        jQuery(this.carousel.nativeElement).carousel({
-            interval: 8000
-        });
-
         if (this.activeId !== undefined) {
             jQuery(this.carousel.nativeElement).find("[data-index='0']").addClass("active");
         } else {
@@ -38,9 +34,17 @@ export class CarouselComponent implements OnInit, AfterViewInit, OnDestroy, OnCh
         }
 
         jQuery(this.carousel.nativeElement).on('slide.bs.carousel', (event: any) => {
-            let dataIndex = event.relatedTarget.getAttribute('data-index');
-            this.currentId = this.eventTrackBy(0, this.items[dataIndex]);
-            this.slidedTo.emit({ value: this.items[dataIndex] });
+            if (event.relatedTarget === undefined) {
+                event.relatedTarget = jQuery(this.carousel.nativeElement).find(".next");
+                console.log("lost id. attempt to restore.");
+            }
+            if (event.relatedTarget === undefined) {
+                console.log("lost id");
+            } else {
+                let dataIndex = event.relatedTarget.getAttribute('data-index');
+                this.currentId = this.eventTrackBy(0, this.items[dataIndex]);
+                this.slidedTo.emit({ value: this.items[dataIndex] });
+            }
         });
 
         jQuery(document).bind('keyup', this.eventHandler);
