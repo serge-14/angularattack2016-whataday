@@ -26,7 +26,7 @@ export class CarouselComponent implements OnInit, AfterViewInit {
             interval: 8000
         });
 
-        jQuery(this.carousel.nativeElement).on('slid.bs.carousel', () => {
+        jQuery(this.carousel.nativeElement).on('slide.bs.carousel', () => {
             this.slidedTo.emit(null);
         });
     }

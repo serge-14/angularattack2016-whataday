@@ -5,7 +5,7 @@ html,body{
 .background {
     background-color: #F7F0CD;
     color: #535353;
-    transition: background-color 500ms, color 500ms;
+    transition: background-color 500ms, color 750ms;
 }
 
 div.background {
