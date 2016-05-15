@@ -3,11 +3,13 @@ import {AppComponent, ThemeType} from './app.component';
 import {EventData} from './model/event.data';
 import {EventType} from "./model/event.type";
 import {ContentService} from "./content.service";
+import {CarouselComponent} from './carousel.component';
 
 
 @Component({
     selector:   'events',
-    templateUrl: 'app/events.component.html'
+    templateUrl: 'app/events.component.html',
+    directives: [CarouselComponent]
 })
 export class EventsComponent implements OnInit {
 

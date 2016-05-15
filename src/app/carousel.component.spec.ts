@@ -22,3 +22,14 @@ describe('CarouselComponent with new', function () {
     expect(new CarouselComponent()).toBeDefined('Whoopie!');
   });
 });
+
+describe('CarouselComponent with TCB', function () {
+
+  it('should instantiate component',
+    async(inject([TestComponentBuilder], (tcb: TestComponentBuilder) => {
+
+    tcb.createAsync(CarouselComponent).then(fixture => {
+      expect(fixture.componentInstance instanceof CarouselComponent).toBe(true, 'should create AppComponent');
+    });
+  })));
+});

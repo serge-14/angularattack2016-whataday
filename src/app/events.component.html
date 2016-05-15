@@ -3,17 +3,15 @@
         <h1>May 14</h1>
     </div>
     <div class="row vertical-align" style="margin-top:50px;">
-        <div class="col-xs-1 col-sm-1 navigation">
-            <a class="button" href="#"><i class="fa fa-chevron-left" aria-hidden="true"></i></a>
-        </div>
-        <div class="col-xs-10 col-sm-10">
-            <p>{{currentEvent.text}}</p>
-        </div>
-        <div class="col-xs-1 col-sm-1 navigation">
-            <a class="button" href="#"><i class="fa fa-chevron-right" aria-hidden="true"></i></a>
-        </div>
-    </div>
-    <div class="row">
-        <h2>{{currentEvent.year}}</h2>
+        <carousel [items]="allEvents">
+            <div template="let item let i=index"  class="item" [class.active]="i==0">
+            <div class="carousel-content">
+                    <div>
+                        <p>{{ item.text }}</p>
+                        <h2>{{ item.year }}</h2>
+                    </div>
+                </div>
+            </div>
+        </carousel>
     </div>
 </div>
