@@ -67,8 +67,6 @@ export class CarouselComponent implements OnInit, AfterViewInit, OnDestroy, OnCh
         } else if (e.keyCode === 37) {
             jQuery(this.carousel.nativeElement).carousel('prev');
         }
-
-        console.log("keyup");
     }
 
     eventTrackBy(index: any, item: any) {
