@@ -6,9 +6,12 @@ import {Production} from './enviroment';
 import {enableProdMode} from '@angular/core';
 import {HTTP_PROVIDERS} from '@angular/http';
 import {ROUTER_PROVIDERS} from "@angular/router";
+import { provide }              from '@angular/core';
+import { LocationStrategy, HashLocationStrategy } from '@angular/common';
+
 
 if (Production) {
     enableProdMode();
 }
 
-bootstrap(AppComponent, [HTTP_PROVIDERS, ROUTER_PROVIDERS]);
+bootstrap(AppComponent, [HTTP_PROVIDERS, ROUTER_PROVIDERS, provide(LocationStrategy, {useClass: HashLocationStrategy})]);
