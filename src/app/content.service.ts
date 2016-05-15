@@ -1,14 +1,17 @@
 /**
  * Created by Renat on 14.05.2016.
  */
-import { Injectable } from '@angular/core';
-import { EventType } from './model/event.type';
-import { EventData } from './model/event.data';
+import {Injectable} from "@angular/core";
+import {EventType} from "./model/event.type";
+import {EventData} from "./model/event.data";
+import {Http, Headers, RequestOptionsArgs, URLSearchParams, Response} from "@angular/http";
+import {Observable} from "rxjs/Observable";
+import "rxjs/add/operator/map";
 
 @Injectable()
 export abstract class ContentService {
 
-    abstract getData(type: EventType, date: Date): Promise<Array<EventData>>;
+    abstract getData(type: EventType, date: Date): Observable<Array<EventData>>;
 
 }
 
@@ -17,30 +20,23 @@ export class ContentServiceImpl extends ContentService {
 
     format: Intl.DateTimeFormat = new Intl.DateTimeFormat('en-US', {month: 'long', day: 'numeric'});
 
-    getData(type: EventType, date: Date): Promise<Array<EventData>> {
-        return new Promise(function(resolve, reject) {
-
-            const xhr = new XMLHttpRequest();
-            xhr.open('GET', ContentServiceImpl.makeUrl(type, date));
-            xhr.withCredentials = true;
-            xhr.setRequestHeader("Content-Type", "application/json; charset=UTF-8");
-            xhr.onload = (ev) => {
-                if (xhr.status < 200 || xhr.status >= 300) {
-                    reject(xhr.responseText);
-                } else {
-                    let json = JSON.parse(xhr.responseText);
-                    resolve(ContentServiceImpl.makeEvents(json.events));
-                }
-            };
-            xhr.onerror = (ev) => {
-                reject('Unable to get data');
-            };
-            xhr.send(null);
-
-        });
+    constructor(private _http: Http) {
+        super();
     }
 
-    private static makeEvents(events: any[]): Array<EventData> {
+    getData(type: EventType, date: Date): Observable<Array<EventData>> {
+        let headers = new Headers();
+        headers.append("Content-Type", "application/json; charset=UTF-8");
+        return this._http.get("https://attack-supplies.rhcloud.com/events", {
+                search: ContentServiceImpl.makeParams(type, date)
+            } as RequestOptionsArgs)
+            .map((res: Response) => {
+                let json = res.json();
+                return ContentServiceImpl.makeEvents(json.events);
+            });
+    }
+
+    private static makeEvents(events: any[] = []): Array<EventData> {
         const result: Array<EventData> = [];
         for (const e of events) {
             const ed = new EventData(e.id, e.year, e.text, null);
@@ -49,11 +45,14 @@ export class ContentServiceImpl extends ContentService {
         return result;
     }
 
-    private static makeUrl(type: EventType, date: Date): string {
+    private static makeParams(type: EventType, date: Date): URLSearchParams {
         const fullDate = date.toISOString();
         let strDate = fullDate.split('T')[0];
         const lt = ContentServiceImpl.getLiteral(type);
-        return `https://attack-supplies.rhcloud.com/events?type=${lt}&date=${strDate}`;
+        let params = new URLSearchParams();
+        params.append("type", lt);
+        params.append("date", strDate);
+        return params;
     }
 
     private static getLiteral(type: EventType) {
