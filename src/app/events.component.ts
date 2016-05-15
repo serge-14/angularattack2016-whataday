@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, OnInit, Inject, forwardRef} from '@angular/core';
 import {AppComponent, ThemeType} from './app.component';
 import {EventData} from './model/event.data';
 import {EventType} from "./model/event.type";
@@ -17,7 +17,7 @@ export class EventsComponent implements OnInit {
 
     private currentEventIndex: number = 0; // tslint:disable-line
 
-    constructor(private _service: ContentService, private app: AppComponent) {};
+    constructor(private _service: ContentService, @Inject(forwardRef(() => AppComponent)) private app: AppComponent) {};
 
     ngOnInit() {
         this._service.getData(EventType.Events, new Date()).then((events: Array<EventData>) => {
