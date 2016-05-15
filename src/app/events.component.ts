@@ -1,5 +1,5 @@
 import {Component, OnInit, Inject, forwardRef} from '@angular/core';
-import {AppComponent, ThemeType} from './app.component';
+import {AppComponent, ThemeType, PageType} from './app.component';
 import {EventData} from './model/event.data';
 import {EventType} from "./model/event.type";
 import {ContentService} from "./content.service";
@@ -28,6 +28,10 @@ export class EventsComponent implements OnInit {
         });
 
         this.app.changeTheme(ThemeType.Normal);
+    }
+
+    onBackClicked() {
+        this.app.changePage(PageType.Welcome);
     }
 }
 

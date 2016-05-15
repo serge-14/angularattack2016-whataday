@@ -1,5 +1,5 @@
 <div class="text-center share">
-    <a *ngFor="#s of socials" href="#" (click)="linkClick(s)">
+    <a *ngFor="let s of socials" href="#" (click)="linkClick(s)">
         <i [class]="getClass(s)" aria-hidden="true"></i>
     </a>
 </div>
