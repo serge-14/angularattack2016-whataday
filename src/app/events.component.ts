@@ -13,6 +13,7 @@ import {CarouselComponent} from './carousel.component';
 })
 export class EventsComponent implements OnInit {
 
+    private current: ThemeType = ThemeType.Normal;
     private allEvents: Array<EventData>;
     private monthNames: string[] = ["January", "February", "March", "April", "May", "June", // tslint:disable-line
         "July", "August", "September", "October", "November", "December" ];                 // tslint:disable-line
@@ -32,6 +33,17 @@ export class EventsComponent implements OnInit {
 
     onBackClicked() {
         this.app.changePage(PageType.Welcome);
+    }
+
+    onSlided() {
+
+        this.current++;
+
+        if (this.current > ThemeType.Grey) {
+            this.current = ThemeType.Normal;
+        }
+
+        this.app.changeTheme(this.current);
     }
 }
 
